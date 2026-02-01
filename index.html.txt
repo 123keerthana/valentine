@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Be My Valentine 💖</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+
+<style>
+body {
+  margin:0;
+  text-align:center;
+  background: linear-gradient(#ffe6f0,#ffd1dc);
+  font-family: Arial;
+  overflow:hidden;
+}
+
+#mainImg {
+  width:80%;
+  margin-top:20px;
+}
+
+.btn {
+  padding:15px 40px;
+  font-size:22px;
+  border-radius:15px;
+  cursor:pointer;
+  margin:20px;
+}
+
+#yesBtn {
+  background:#2196f3;
+  color:white;
+  font-size:28px;
+}
+
+#noBtn {
+  position:absolute;
+  background:#ddd;
+}
+
+#message {
+  font-family:'Pacifico', cursive;
+  font-size:36px;
+  color:#ff4081;
+  margin-top:20px;
+}
+
+#img3 {
+  position:absolute;
+  right:20px;
+  bottom:20px;
+  width:150px;
+  display:none;
+}
+
+/* hearts */
+.heart {
+  position:fixed;
+  bottom:-10px;
+  color:red;
+  font-size:20px;
+  animation: float 5s linear infinite;
+}
+
+@keyframes float {
+  from {transform: translateY(0); opacity:1;}
+  to {transform: translateY(-800px); opacity:0;}
+}
+
+/* confetti */
+.confetti {
+  position:fixed;
+  width:10px;
+  height:10px;
+  background:red;
+  animation: fall 3s linear forwards;
+}
+
+@keyframes fall {
+  to {transform: translateY(800px) rotate(360deg); opacity:0;}
+}
+</style>
+</head>
+
+<body>
+
+<audio id="music" autoplay loop>
+  <source src="music.mp3" type="audio/mpeg">
+</audio>
+
+<img id="mainImg" src="img1.jpg">
+
+<div>
+  <button id="yesBtn" class="btn">YES</button>
+  <button id="noBtn" class="btn">NO</button>
+</div>
+
+<div id="message"></div>
+<img id="img3" src="img3.jpg">
+
+<script>
+const noBtn = document.getElementById("noBtn");
+const yesBtn = document.getElementById("yesBtn");
+const mainImg = document.getElementById("mainImg");
+const message = document.getElementById("message");
+const img3 = document.getElementById("img3");
+const music = document.getElementById("music");
+
+// move NO button
+noBtn.addEventListener("mouseover", ()=>{
+  let x = Math.random()*(window.innerWidth-100);
+  let y = Math.random()*(window.innerHeight-100);
+  noBtn.style.left = x+"px";
+  noBtn.style.top = y+"px";
+});
+
+// typing text
+function typeText(text){
+  message.innerHTML="";
+  let i=0;
+  let interval=setInterval(()=>{
+    message.innerHTML += text.charAt(i);
+    i++;
+    if(i>=text.length) clearInterval(interval);
+  },100);
+}
+
+// hearts animation
+function createHeart(){
+  const heart=document.createElement("div");
+  heart.className="heart";
+  heart.innerHTML="❤️";
+  heart.style.left=Math.random()*100+"vw";
+  heart.style.fontSize=Math.random()*20+15+"px";
+  document.body.appendChild(heart);
+  setTimeout(()=>heart.remove(),5000);
+}
+setInterval(createHeart,300);
+
+// confetti
+function confetti(){
+  for(let i=0;i<100;i++){
+    const c=document.createElement("div");
+    c.className="confetti";
+    c.style.left=Math.random()*100+"vw";
+    c.style.background=`hsl(${Math.random()*360},100%,50%)`;
+    document.body.appendChild(c);
+    setTimeout(()=>c.remove(),3000);
+  }
+}
+
+// YES click
+yesBtn.onclick=()=>{
+  mainImg.src="img2.jpg";
+  img3.style.display="block";
+  typeText("For you, my Valentine 💕");
+  yesBtn.style.display="none";
+  noBtn.style.display="none";
+  confetti();
+};
+
+// NO click
+noBtn.onclick=()=>{
+  mainImg.src="imgNo.jpg";
+  typeText("There is no NO option for u.");
+  yesBtn.style.display="none";
+  noBtn.style.display="none";
+};
+</script>
+
+</body>
+</html>

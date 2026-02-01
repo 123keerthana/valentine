@@ -2,17 +2,52 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Be My Valentine 💖</title>
+<title>Chakri, Will You Be My Valentine? 💖</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
 
 <style>
 body {
-  margin:0;
-  text-align:center;
-  background: linear-gradient(#ffe6f0,#ffd1dc);
-  font-family: Arial;
-  overflow:hidden;
+  margin: 0;
+  text-align: center;
+  background: linear-gradient(#ffe6f0, #ffd1dc);
+  font-family: Arial, sans-serif;
+  overflow: hidden;
+}
+
+/* Start Screen */
+#startScreen {
+  position: fixed;
+  top:0; left:0;
+  width:100%;
+  height:100%;
+  background:#ffb6c1;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  z-index:10;
+}
+
+#startBtn {
+  padding:20px 50px;
+  font-size:26px;
+  border-radius:20px;
+  border:none;
+  background:#ff4081;
+  color:white;
+  cursor:pointer;
+}
+
+#musicBtn {
+  padding:15px 40px;
+  font-size:20px;
+  border-radius:15px;
+  border:none;
+  background:#2196f3;
+  color:white;
+  cursor:pointer;
+  margin:15px;
 }
 
 #mainImg {
@@ -26,6 +61,7 @@ body {
   border-radius:15px;
   cursor:pointer;
   margin:20px;
+  border:none;
 }
 
 #yesBtn {
@@ -54,7 +90,7 @@ body {
   display:none;
 }
 
-/* hearts */
+/* Hearts */
 .heart {
   position:fixed;
   bottom:-10px;
@@ -68,12 +104,11 @@ body {
   to {transform: translateY(-800px); opacity:0;}
 }
 
-/* confetti */
+/* Confetti */
 .confetti {
   position:fixed;
   width:10px;
   height:10px;
-  background:red;
   animation: fall 3s linear forwards;
 }
 
@@ -85,10 +120,21 @@ body {
 
 <body>
 
-<audio id="music" autoplay loop>
+<!-- Start Screen -->
+<div id="startScreen">
+  <h1 style="font-family:'Pacifico',cursive;color:white;font-size:40px;">
+    Chakri 💖
+  </h1>
+  <button id="startBtn">Tap to open 💖</button><br>
+  <button id="musicBtn">Tap to start music 🎵</button>
+</div>
+
+<!-- Music -->
+<audio id="music" loop>
   <source src="music.mp3" type="audio/mpeg">
 </audio>
 
+<!-- Main Image -->
 <img id="mainImg" src="img1.jpg">
 
 <div>
@@ -100,22 +146,37 @@ body {
 <img id="img3" src="img3.jpg">
 
 <script>
+const startScreen = document.getElementById("startScreen");
+const startBtn = document.getElementById("startBtn");
+const musicBtn = document.getElementById("musicBtn");
+const music = document.getElementById("music");
+
 const noBtn = document.getElementById("noBtn");
 const yesBtn = document.getElementById("yesBtn");
 const mainImg = document.getElementById("mainImg");
 const message = document.getElementById("message");
 const img3 = document.getElementById("img3");
-const music = document.getElementById("music");
 
-// move NO button
-noBtn.addEventListener("mouseover", ()=>{
-  let x = Math.random()*(window.innerWidth-100);
-  let y = Math.random()*(window.innerHeight-100);
-  noBtn.style.left = x+"px";
-  noBtn.style.top = y+"px";
+// Start screen hide
+startBtn.onclick = () => {
+  startScreen.style.display = "none";
+};
+
+// Start music
+musicBtn.onclick = () => {
+  music.play();
+  musicBtn.style.display = "none";
+};
+
+// Move NO button
+noBtn.addEventListener("mouseover", () => {
+  let x = Math.random() * (window.innerWidth - 100);
+  let y = Math.random() * (window.innerHeight - 100);
+  noBtn.style.left = x + "px";
+  noBtn.style.top = y + "px";
 });
 
-// typing text
+// Typing text
 function typeText(text){
   message.innerHTML="";
   let i=0;
@@ -126,7 +187,7 @@ function typeText(text){
   },100);
 }
 
-// hearts animation
+// Hearts
 function createHeart(){
   const heart=document.createElement("div");
   heart.className="heart";
@@ -138,9 +199,9 @@ function createHeart(){
 }
 setInterval(createHeart,300);
 
-// confetti
+// Confetti
 function confetti(){
-  for(let i=0;i<100;i++){
+  for(let i=0;i<120;i++){
     const c=document.createElement("div");
     c.className="confetti";
     c.style.left=Math.random()*100+"vw";
@@ -154,7 +215,7 @@ function confetti(){
 yesBtn.onclick=()=>{
   mainImg.src="img2.jpg";
   img3.style.display="block";
-  typeText("For you, my Valentine 💕");
+  typeText("Chakri, For you my Valentine 💕");
   yesBtn.style.display="none";
   noBtn.style.display="none";
   confetti();
@@ -163,7 +224,7 @@ yesBtn.onclick=()=>{
 // NO click
 noBtn.onclick=()=>{
   mainImg.src="imgNo.jpg";
-  typeText("There is no NO option for u.");
+  typeText("There is no NO option for u 😄");
   yesBtn.style.display="none";
   noBtn.style.display="none";
 };
@@ -171,3 +232,4 @@ noBtn.onclick=()=>{
 
 </body>
 </html>
+
